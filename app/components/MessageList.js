@@ -9,7 +9,6 @@ import React, {
 } from 'react-native';
 
 import { fetchMessages } from '../actions/actions';
-import { connect } from 'react-redux';
 
 const styles = StyleSheet.create({
   container: {
@@ -75,7 +74,6 @@ export default class MessageList extends Component {
   }
 
   render() {
-    console.log(JSON.stringify(this.props.value))
     return (
       <View style={styles.container}>
         <Text>Require-lx Follower</Text>
@@ -103,9 +101,3 @@ MessageList.propTypes = {
   ),
   fetchMessages: React.PropTypes.func
 };
-
-function mapStateToProps(state) {
-  return state;
-}
-
-export default connect(mapStateToProps)(MessageList);

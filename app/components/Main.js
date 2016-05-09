@@ -21,15 +21,16 @@ export default class Main extends Component {
       <MessageList
         value={state}
         {...actions}
+        dispatch={this.props.dispatch}
         navigator={this.props.navigator} />
     );
   }
 }
 
 export default connect(state => ({
-    state: state.fetcher//.toArray()
-  }),
-  (dispatch) => ({
-    actions: bindActionCreators(actions, dispatch)
-  })
+    state: state.fetcher
+  })//,
+  // (dispatch) => ({
+  //   actions: bindActionCreators(actions, dispatch)
+  // })
 )(Main);
