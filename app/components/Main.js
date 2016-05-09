@@ -28,7 +28,7 @@ export default class Main extends Component {
 }
 
 export default connect(state => ({
-    state: state.fetcher
+    state: state.fetcher.toArray()
   })//,
   // (dispatch) => ({
   //   actions: bindActionCreators(actions, dispatch)

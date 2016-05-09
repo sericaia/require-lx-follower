@@ -7,7 +7,7 @@ const initialState = new Immutable.List();
 
 export default function fetcher(state = initialState, action = {}) {
 
-    function parseMessage(message) {
+    function parseMessage(currentState, message) {
       var msg = {
        id: state.size,
        title: message.title,
@@ -15,12 +15,13 @@ export default function fetcher(state = initialState, action = {}) {
        updatedAt: message.updated_at
     };
 
-      return state.push(msg);
+      return currentState.push(msg);
     }
 
     if(action.type === types.RECEIVE_MESSAGES) {
-      var _state = action.data.map(message => parseMessage(message));
-      return _state;
+      return action.data.reduce(function(currentState, message) {
+        return parseMessage(currentState, message);
+      }, state);
     } else {
       return state;
     }

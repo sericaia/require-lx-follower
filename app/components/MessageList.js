@@ -63,7 +63,6 @@ export default class MessageList extends Component {
     if (!value) {
       return (<Text>Loading data.. </Text>);
     }
-    // debugger;
     return (
       <View style={styles.listItem} key={value.id}>
         <Text style={styles.listItemTitle}>{value.title}</Text>
@@ -82,9 +81,6 @@ export default class MessageList extends Component {
           renderRow={this.renderMessage}
           style={styles.listView}
         />
-
-        <Text>{ JSON.stringify(this.props.value) }</Text>
-
       </View>
     );
   }
@@ -96,7 +92,7 @@ MessageList.propTypes = {
       id: React.PropTypes.number,
       title: React.PropTypes.string,
       state: React.PropTypes.string,
-      updatedAt: React.PropTypes.number
+      updatedAt: React.PropTypes.string
     })
   ),
   fetchMessages: React.PropTypes.func
