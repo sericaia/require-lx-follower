@@ -1,0 +1,30 @@
+{
+  "name": "require-lx-follower",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.7.4",
+    "immutable": "^3.8.1",
+    "isomorphic-fetch": "^2.2.1",
+    "react-native": "^0.23.1",
+    "react-redux": "4.4.0",
+    "redux": "3.3.1",
+    "redux-thunk": "^2.0.1"
+  },
+  "description": "Fetch data from require-lx community",
+  "main": "index.ios.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sericaia/require-lx-follower.git"
+  },
+  "author": "Daniela Borges <alunassertiva@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sericaia/require-lx-follower/issues"
+  },
+  "homepage": "https://github.com/sericaia/require-lx-follower"
+}
