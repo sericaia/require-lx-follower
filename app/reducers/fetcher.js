@@ -1,26 +1,44 @@
 'use strict';
 
-import * as types from '../actions/actionTypes';
+import getValue from 'get-value';
 import Immutable from 'immutable';
+import moment from 'moment';
+
+import * as types from '../actions/actionTypes';
+import apiData from '../assets/apiData';
 
 const initialState = new Immutable.List();
 
 export default function fetcher(state = initialState, action = {}) {
 
-    function parseMessage(currentState, message) {
-      var msg = {
-       id: state.size,
-       title: message.title,
-       state: message.state,
-       updatedAt: message.updated_at
-    };
+    function parseMessage(provider, currentState, message) {
 
-      return currentState.push(msg);
+      var parse = {
+        github: {
+         id: state.size,
+         title: message.title,
+         state: message.state,
+         createdAt: moment(message.created_At).format('MMM Do YYYY'),
+         url: message.html_url,
+         provider,
+        },
+        meetup: {
+         id: state.size,
+         title: message.name,
+         state: message.status,
+         date: moment(message.time).format('MMM Do YYYY'),
+         url: message.event_url,
+         provider
+       }
+     };
+
+      return currentState.push(parse[provider]);
     }
 
     if(action.type === types.RECEIVE_MESSAGES) {
-      return action.data.reduce(function(currentState, message) {
-        return parseMessage(currentState, message);
+      var resultsField = apiData[action.provider].resultsField;
+      return getValue(action, resultsField).reduce(function(currentState, message) {
+        return parseMessage(action.provider, currentState, message);
       }, state);
     } else {
       return state;

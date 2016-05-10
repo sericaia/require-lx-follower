@@ -21,8 +21,7 @@ export default class Main extends Component {
       <MessageList
         value={state}
         {...actions}
-        dispatch={this.props.dispatch}
-        navigator={this.props.navigator} />
+        dispatch={this.props.dispatch} />
     );
   }
 }

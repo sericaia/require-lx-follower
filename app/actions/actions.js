@@ -17,8 +17,9 @@ function requestMessages(content) {
     content  };
 }
 
-function receiveMessages(content, jsonData) {
+function receiveMessages(provider, content, jsonData) {
   return {
+    provider,
     type: types.RECEIVE_MESSAGES,
     content,
     data: jsonData,
@@ -26,14 +27,14 @@ function receiveMessages(content, jsonData) {
   };
 }
 
-export function fetchMessages(content, limit) {
+export function fetchMessages(provider, content, limit) {
   return dispatch => {
     dispatch(requestMessages(content));
 
-    return api.getMessages(content, limit)
+    return api.getMessages(provider, content, limit)
       .then(json => {
 
-        return dispatch(receiveMessages(content, json));
+        return dispatch(receiveMessages(provider, content, json));
       })
       .catch((error) => handleActionError(dispatch, error, content));
   };

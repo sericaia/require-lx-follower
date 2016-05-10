@@ -2,18 +2,32 @@
 
 import fetch from 'isomorphic-fetch';
 import processResponse from './processResponse';
-
-const GITHUB_API = 'https://api.github.com';
+import apiData from '../assets/apiData';
 
 var api = {
-  getMessages(roomId, limit) {
-    roomId = roomId.toLowerCase().trim();
-
-    var url = `${GITHUB_API}/repos/${roomId}/issues?per_page=${limit}`;
+  github(roomId, limit) {
+    var api = apiData.github.apiUrl;
+    var url = apiData.github.issues
+              .replace('${api}', api)
+              .replace('${roomId}', roomId)
+              .replace('${limit}', limit);
 
     return fetch(url).then(processResponse);
-  }
+  },
+  meetup(roomId, limit) {
+    var api = apiData.meetup.apiUrl;
+    var url = apiData.meetup.events
+              .replace('${api}', api)
+              .replace('${roomId}', roomId)
+              .replace('${limit}', limit);
 
+    return fetch(url).then(processResponse);
+  },
+  getMessages(provider, roomId, limit) {
+    roomId = roomId.toLowerCase().trim();
+
+    return this[provider](roomId, limit);
+  }
 };
 
 export default api;

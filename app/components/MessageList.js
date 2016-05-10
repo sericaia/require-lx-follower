@@ -5,36 +5,19 @@ import React, {
   Component,
   View,
   ListView,
-  Text
+  Text,
+  Linking
 } from 'react-native';
 
 import { fetchMessages } from '../actions/actions';
+import GithubList from './GithubList';
+import MeetupList from './MeetupList';
 
 const styles = StyleSheet.create({
   container: {
     marginTop: 65,
     flexDirection: 'column',
     alignSelf: 'stretch',
-  },
-  listView: {
-  },
-  listItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: '#F7EDBF',
-    margin: 1,
-    padding: 5
-  },
-  listItemTitle: {
-    fontSize: 18
-  },
-  listItemDuration: {
-  },
-  btnArea: {
-    marginTop: 30,
-    marginBottom: 30,
-    flexDirection: 'row',
-    alignSelf: 'center',
   }
 });
 
@@ -43,44 +26,60 @@ export default class MessageList extends Component {
     super(props);
     this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
+    var emptyRows = this.ds.cloneWithRows([]);
     this.state = {
-      dataSource: this.ds.cloneWithRows(this.props.value)
+      githubList: emptyRows,
+      meetupList: emptyRows,
     };
+  }
+
+  filterProvider(list, provider) {
+    return list.filter((item) => item.provider === provider);
   }
 
   componentWillMount() {
     const { dispatch } = this.props;
-    dispatch(fetchMessages('require-lx/community', 5));
+    dispatch(fetchMessages('github', 'require-lx/community', 5));
+    dispatch(fetchMessages('meetup', 'require-lx', 5));
   }
 
   componentWillReceiveProps(nextProps) {
+
+    //TODO optimize
+
+    var githubList = this.filterProvider(nextProps.value, 'github');
+    var meetupList = this.filterProvider(nextProps.value, 'meetup');
+
     this.setState({
-      dataSource: this.ds.cloneWithRows(nextProps.value)
+      githubList: this.ds.cloneWithRows(githubList),
+      meetupList: this.ds.cloneWithRows(meetupList),
     });
   }
 
-  renderMessage(value) {
-    if (!value) {
-      return (<Text>Loading data.. </Text>);
-    }
-    return (
-      <View style={styles.listItem} key={value.id}>
-        <Text style={styles.listItemTitle}>{value.title}</Text>
-        <Text style={styles.listItemDuration}>{value.state}</Text>
-        <Text style={styles.listItemDuration}>{value.updatedAt}</Text>
-      </View>
-    );
+  handleURLClick(url) {
+
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.log('Don\'t know how to open URI: ' + url);
+      }
+    });
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text>Require-lx Follower</Text>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderMessage}
-          style={styles.listView}
-        />
+
+        <GithubList
+          value={this.state.githubList}
+          handleURLClick={this.handleURLClick}
+          provider="github"/>
+        <MeetupList
+          value={this.state.meetupList}
+          handleURLClick={this.handleURLClick}
+          provider="meetup" />
       </View>
     );
   }
@@ -92,7 +91,7 @@ MessageList.propTypes = {
       id: React.PropTypes.number,
       title: React.PropTypes.string,
       state: React.PropTypes.string,
-      updatedAt: React.PropTypes.string
+      updatedAt: React.PropTypes.number
     })
   ),
   fetchMessages: React.PropTypes.func
