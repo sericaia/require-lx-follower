@@ -50,7 +50,7 @@ export default class MessageList extends Component {
 
   componentWillMount() {
     const { dispatch } = this.props;
-    dispatch(fetchMessages('require-lx/community'));
+    dispatch(fetchMessages('require-lx/community', 5));
   }
 
   componentWillReceiveProps(nextProps) {

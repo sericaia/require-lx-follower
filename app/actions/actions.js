@@ -26,11 +26,11 @@ function receiveMessages(content, jsonData) {
   };
 }
 
-export function fetchMessages(content) {
+export function fetchMessages(content, limit) {
   return dispatch => {
     dispatch(requestMessages(content));
 
-    return api.getMessages(content)
+    return api.getMessages(content, limit)
       .then(json => {
 
         return dispatch(receiveMessages(content, json));

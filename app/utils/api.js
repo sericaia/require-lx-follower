@@ -6,10 +6,10 @@ import processResponse from './processResponse';
 const GITHUB_API = 'https://api.github.com';
 
 var api = {
-  getMessages(roomId) {
+  getMessages(roomId, limit) {
     roomId = roomId.toLowerCase().trim();
 
-    var url = `${GITHUB_API}/repos/${roomId}/issues`;
+    var url = `${GITHUB_API}/repos/${roomId}/issues?per_page=${limit}`;
 
     return fetch(url).then(processResponse);
   }
