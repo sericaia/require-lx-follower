@@ -23,7 +23,7 @@ export default class Follower extends Component {
         style={styles.container}
         initialRoute={{
           component: Main,
-          title: 'Follower'
+          title: 'Require-lx Follower'
         }}
       />
     );

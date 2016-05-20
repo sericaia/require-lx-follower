@@ -5,8 +5,8 @@ import React, {
   Component,
   View,
   ListView,
-  Text,
-  Linking
+  Linking,
+  Image
 } from 'react-native';
 
 import { fetchMessages } from '../actions/actions';
@@ -18,6 +18,16 @@ const styles = StyleSheet.create({
     marginTop: 65,
     flexDirection: 'column',
     alignSelf: 'stretch',
+  },
+  imagesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  thumb: {
+    width: 100,
+    height: 100,
+    overflow: 'visible',
+    margin: 5
   }
 });
 
@@ -70,7 +80,17 @@ export default class MessageList extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Require-lx Follower</Text>
+        <View style={styles.imagesContainer}>
+          <Image
+            source={require('./images/require-lx.png')}
+            style={styles.thumb}
+          />
+          <Image
+            source={require('./images/nodeschool.png')}
+            style={styles.thumb}
+          />
+        </View>
+
 
         <GithubList
           value={this.state.githubList}
