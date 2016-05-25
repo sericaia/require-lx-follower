@@ -6,26 +6,38 @@ import React, {
   View,
   ListView,
   Linking,
-  Image
+  Image,
+  Text
 } from 'react-native';
+
+import Swiper from 'react-native-swiper';
 
 import { fetchMessages } from '../actions/actions';
 import GithubList from './GithubList';
 import MeetupList from './MeetupList';
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 65,
-    flexDirection: 'column',
-    alignSelf: 'stretch',
+  mainSlide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 30,
+    marginRight: 30
+  },
+  fetchSlide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    marginLeft: 30,
+    marginRight: 30
   },
   imagesContainer: {
     flexDirection: 'row',
     justifyContent: 'center'
   },
   thumb: {
-    width: 100,
-    height: 100,
+    width: 110,
+    height: 110,
     overflow: 'visible',
     margin: 5
   }
@@ -79,28 +91,35 @@ export default class MessageList extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.imagesContainer}>
-          <Image
-            source={require('./images/require-lx.png')}
-            style={styles.thumb}
-          />
-          <Image
-            source={require('./images/nodeschool.png')}
-            style={styles.thumb}
-          />
+      <Swiper showsButtons={true}>
+
+        <View style={styles.mainSlide}>
+          <View style={styles.imagesContainer}>
+            <Image
+              source={require('./images/require-lx.png')}
+              style={styles.thumb}
+            />
+            <Image
+              source={require('./images/nodeschool.png')}
+              style={styles.thumb}
+            />
+          </View>
+          <Text>Require-lx Follower</Text>
         </View>
 
-
-        <GithubList
-          value={this.state.githubList}
-          handleURLClick={this.handleURLClick}
-          provider="github"/>
-        <MeetupList
-          value={this.state.meetupList}
-          handleURLClick={this.handleURLClick}
-          provider="meetup" />
-      </View>
+        <View style={styles.fetchSlide}>
+          <GithubList
+            value={this.state.githubList}
+            handleURLClick={this.handleURLClick}
+            provider="github"/>
+        </View>
+        <View style={styles.fetchSlide}>
+          <MeetupList
+            value={this.state.meetupList}
+            handleURLClick={this.handleURLClick}
+            provider="meetup" />
+        </View>
+      </Swiper>
     );
   }
 }

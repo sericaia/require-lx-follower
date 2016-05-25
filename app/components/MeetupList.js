@@ -14,12 +14,10 @@ const styles = StyleSheet.create({
   listView: {
   },
   listItem: {
-    // flexDirection: 'row',
-    // justifyContent: 'space-between',
     backgroundColor: '#F7EDBF',
     margin: 1,
     padding: 5,
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   listItemTitle: {
     fontSize: 13,
@@ -38,7 +36,8 @@ const styles = StyleSheet.create({
   thumb: {
     width: 100,
     height: 80,
-    overflow: 'visible'
+    overflow: 'visible',
+    marginBottom: 10
   },
 });
 
@@ -70,6 +69,7 @@ export default class MeetupList extends Component {
   render() {
     return (
       <View style={styles.container}>
+
         <Image
           source={require('./images/meetup_logo.png')}
           style={styles.thumb}
@@ -85,15 +85,3 @@ export default class MeetupList extends Component {
     );
   }
 }
-
-// TODO: adapt to dataSource instead of arrayOf
-// MeetupList.propTypes = {
-//   value: React.PropTypes.arrayOf(
-//     React.PropTypes.shape({
-//       id: React.PropTypes.number,
-//       title: React.PropTypes.string,
-//       state: React.PropTypes.string,
-//       updatedAt: React.PropTypes.string
-//     })
-//   )
-// };
