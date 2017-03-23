@@ -1,6 +1,6 @@
 ### require-lx-follower
 
-![](http://i.imgur.com/AtKzQNA.gif =150x)
+![image](http://i.imgur.com/AtKzQNA.gif =150x)
 
 #### How to run
 `npm install`
